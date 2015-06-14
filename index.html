@@ -1,0 +1,178 @@
+<!Doctype html>
+<html>
+<head>
+	<title>Calcukator</title>
+	<meta charset='utf-8'>
+	<style>
+		*{
+			padding: 0;
+			margin: 0;
+		}
+		@font-face{
+			font-family: Digital-7;
+			src:url(fonts/digital.ttf);
+		}
+		.main{
+			position: relative;
+			box-sizing:border-box;
+			height:445px;
+			width: 365px;
+			background: #2a3332;
+			opacity: .7;
+			margin: 1px auto;
+			overflow:hidden;
+			border-radius: 15px;
+			box-shadow: 0 15px 0 #7f8f88;
+			border: 2px black inset;
+		}
+		.screenWrapper{
+			box-sizing:border-box;
+			width: 340px;
+			height: 110px;
+			margin:5px auto;
+			background: #21231e;
+			position: relative;
+			border-radius: 5px;
+			text-align: center;
+			overflow: hidden;
+			border: 2px black inset;
+		}
+		.screen{
+			box-sizing:border-box;
+			height: 60px;
+			width: 301px;
+			margin:6px 15px;
+			background: #88947e;
+			position: absolute;
+			border-radius: inherit;
+			color: #161a1e;
+			font-family: Digital-7;
+			font-size: 32pt;
+			overflow: inherit;
+			border: 5px #959c7b inset;
+			line-height: 50px;
+			text-align: right;
+			padding-right: 10px;
+		}
+		table{
+			height: 320px;
+			width: 300px;
+			margin: 0px auto;
+			position: relative;
+		}
+		td{
+			height: 25%;
+		}
+		button{
+			margin: 5px;
+			padding: 0;
+			width: 50px;
+			height: 50px;
+			color: white;
+			background: black;
+			border: 1px solid white;
+			border-radius: 5px;
+			font-family: Digital-7;
+			font-size: 30pt;
+		}
+		.bigButtons{
+			height: 135px;
+			background: #d7641e;
+		}
+		
+	</style>
+	
+</head>
+<body>
+	<div class='main'>
+		<div class='screenWrapper'>Calculator<div class='screen' id='display'></div></div>
+		<table id ='table'>
+			<tr><td><button value='1'>1</button></td>
+				<td><button>2</button></td>
+				<td><button>3</button></td>
+				<td><button>/</button></td>
+				<td><button>*</button></td></tr>
+			<tr><td><button>4</button></td>
+				<td><button>5</button></td>
+				<td><button>6</button></td>
+				<td><button>+</button></td>
+				<td><button>-</button></td></tr>
+			<tr><td><button>7</button></td>
+				<td><button>8</button></td>
+				<td><button>9</button></td>
+				<td rowspan='2'><button class='bigButtons'>=</button></td>
+				<td rowspan='2'><button class='bigButtons'>C</button></td></tr>
+			<tr ><td><button>0</button></td>
+				<td><button>00</button></td>
+				<td><button>.</button></td></tr>
+		</table>
+	</div>	
+	<script type="text/javascript">
+	'use strict'
+	var Calculator = (function() {
+		var table = document.getElementById('table'),
+			display = document.getElementById('display');
+		table.onclick = function(e) {
+			if(e.target.nodeName !=='BUTTON') {
+				return;
+			};
+			var buttonNumber = e.target.innerHTML;
+			switch(buttonNumber) {
+				case 'C': cleaner();
+					break;
+				case '=': Calculate();
+					break;	
+				case '-': sort(buttonNumber);
+				    break;
+				case '+': sort(buttonNumber); 
+					break; 
+				case '/': sort(buttonNumber); 
+					break; 
+				case '*': sort(buttonNumber); 
+					break;
+				default: data.Arguments.push(buttonNumber); display.innerHTML = data.Arguments.join('');
+					break;
+				};
+		};
+		function sort(Operator) {
+			data.Operator = Operator;
+			data.leftHandOperand  = data.Arguments.join('');
+			data.Arguments = [];
+			display.innerHTML = data.Operator;
+		};
+		function Calculate() {
+			data.rightHandOperand = data.Arguments.join('');
+			var total,
+				leftOperand = +data.leftHandOperand,
+				rightOperand = +data.rightHandOperand;
+			switch(data.Operator){
+				case '+': total = leftOperand + rightOperand;
+					break;
+				case '-': total = leftOperand - rightOperand;
+					break;
+				case '*': total = leftOperand * rightOperand;
+					break;
+				case '/': total = leftOperand / rightOperand;
+					break;
+				default: display.innerHTML = 'Error';
+					break;
+			};
+			cleaner();
+			display.innerHTML = total;
+		};
+		function cleaner() {
+			display.innerHTML ='';
+			data.Arguments = [];
+			data.leftHandOperand = '';
+			data.rightOperand = '';
+			data.Operator = '';
+		};
+		var data = {
+			Arguments:[],
+			leftHandOperand:''
+		};
+	})();
+	</script>
+</body>
+
+</html>
